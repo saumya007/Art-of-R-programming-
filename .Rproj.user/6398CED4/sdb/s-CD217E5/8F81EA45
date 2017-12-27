@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "df1 <- data.frame(x = sample(c(1 ,NA, 2, 3, 4, 5), 1000, replace = TRUE), y = runif(1000),\n                  z = sample(c(1 ,NA), 1000, replace = TRUE, prob = c(0.3, 0.7)))\n\nmean(is.na(df1$x))\nmean(is.na(df1$y))\nmean(is.na(df1$z))\n\nx <- sample(100)\nsapply(x, function(x) {\n  x^2\n})\n\ncols_na_val <- function(df, thres) {\n  res <- apply(df, 2, function(x) {\n    mean(is.na(x))\n  })\n  \n  names(res[res > thres])  \n}\n\nna_val_cols(df1, .5)\nna_val_cols(df1, .1)\n\ncols_type <- function(df) {\n  res <- apply(df, 2, function(x) {\n    typeof(x)\n  })\n  \n  res\n}\n\ncols_type(iris[, -5])\n\ntypeof(iris$Sepal.Length)\n\nlapply(iris, function(x) {\n  typeof(x)\n})\n\ngenerate_blobs <- function(n_datapoints, n_blobs, min, max, spread) {\n  \n}\n",
+    "created" : 1514287765622.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4064535810",
+    "id" : "8F81EA45",
+    "lastKnownWriteTime" : 1514359596,
+    "last_content_update" : 1514359596274,
+    "path" : "~/Desktop/Art of r Programming/Basics for R/na_task1.R",
+    "project_path" : "Basics for R/na_task1.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

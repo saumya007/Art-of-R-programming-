@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "kids <- c(\"Jack\",\"Jill\")\nages <- c(12,20)\nd <- data.frame(kids, ages, stringsAsFactors = FALSE)\nprint(d[[1]])\n# loop example basic\n  x <- c(1,2,3,4,5)\n  for (n in x) { print (n * n)}\n  # functions\n  f1 <-function(a,b) { return (a+b) }\n  f2 <- function(a,b) { return (a -b) }\n  f <- f1\n  a <- f(3,2)\n  print(a)",
+    "created" : 1514269467612.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4246558381",
+    "id" : "F6B51D0F",
+    "lastKnownWriteTime" : 1514361189,
+    "last_content_update" : 1514361189595,
+    "path" : "~/Desktop/Art of r Programming/Basics for R/examples_ch6.R",
+    "project_path" : "Basics for R/examples_ch6.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
