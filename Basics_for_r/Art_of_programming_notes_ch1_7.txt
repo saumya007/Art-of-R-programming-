@@ -1,0 +1,329 @@
+Art of R Programming Notes:
+  Two modes to run :
+  1.) Interactive Mode
+2.) Batch Mode
+**Interactive Mode : ** commands in terminal. e.g. mean(abs(rnorm(100))), rnorm(10), etc
+Batch Mode: NO user interaction necessary. Run periodically. Run by R CMD BATCH z.R
+R code file execution : suffix is .R or .r . Run by : ** source(“abc.R”)**
+  rnnom for random numbers
+for comments.
+pdf(): Save the file as a pdf file. E.g. pdf(x.pdf())
+**rnorm() : ** generate 100 N (0,1) random variates.
+hist(): Plotting histogram.
+dev.off() : Closing the graphical device in use currently. E.g. x.pdf . This causes a file write on the disc.
+Default hist : plain vanilla histogram.
+-** data set == vector in R**
+  e.g. x <- c(1,2,4) where <- is the assignment operator. No fixed data types associated with variables. C stands for concatenate . Here concatenating 3 one element vectors. Any number is considered as one element vector.
+Access individual elements of vector by [ “ position” ]
+Index vectors start from1 .
+Subsetting e.g. x[2:3]
+mean(X) : finding mean of a vector
+sd(x): finding standard deviation.
+data() : getting internal datasets of R.
+hist(X) : plotting histograms.
+q() -> quit from R.
+FUNCTIONS IN R :
+  functionname -< function(x) { # code in here }
+    Here x is the formal parameter . c(2,3,4). Inside the functionname(c()) is actual parameter.
+    %% is the modulus operator . E.g. 2 %%3
+    In R avoid loops. If not keep the loops simple.
+    VARIABLE SCOPE :
+      Local and global
+    Local : Visible only within a function body. Formal parameters in R are local params. - Global : Created outside functions but available inside functions also.
+    DEFAULT ARGUMENTS :
+      g <- function(x, y=2, z = T ) { .... } # here y and z are set to default arguments if not explicitly set.
+    so now g can be called as g(10) or g(10,z = FALSE)
+    TRUE OR FALSE AS T OR F ALLOWED IN R
+    DATA STRUCTURES :
+      Elements of vectors should have same mode or same data type .
+    Scalars :** Don’t exist in R**. Single elements are treated as one element vectors.
+    Character Strings : Single element vectors of the mode character. String related operations are supported .
+    u <- paste(“a”, ”b”, ”c”) : for concatenation.
+    strsplit( u, delimiter) :Splitting as per the delimiter.
+    Matrices :
+      rbind(c1,c2) : c1 and c2 are the vectors which will be filled in the matrix as a row or as a column entry. Here rbind( ) indicates that c1 and c2 will serve as a row binding and c1 and c2 are row entries.
+    submatrix operations : m[1, ] first row. m[,2] second column.
+    Lists : Contents can be items of different datatypes. e. g. x <- list( u =2, v = “abc)
+    Accessing elements in list by $varname : e.g. $u , $v
+    breaks : bins of histograms.
+    Data frames :
+      Can have a mix of datatypes.
+    e.g. d <- data.frame(list(kids = c(“Jack”, “Jill”), ages=c( 12,10)))
+    Classes :
+      S3 classes . R lists with class name as an attribute added to it.
+    Classes are used by generic functions. E.g. summary() is a generic function. Creates a summary for appropriate function.plot() is another generic function.
+    Regression Analysis example :
+      examsquiz <- readtable(table name, header = true or false # true if header naming variables in each record. )
+                             class(examsquiz) # data. Frame here
+                             head(examsquiz) # first n entries.
+                             lma <- lm(test data # what tp predict ~ train data # from what to predict) . Prediction = b0 + b1 data1.
+                                       list components of an object by calling attributes(object)
+                                       lma$coeff : for printing coefficients.
+                                       printing lma by calling > lma triggers call to print.lm() will print only the call and coefficients . To get a detailed summary about the other objects of class, write summary(lma) . Triggers call to summary.lm()
+                                       lma <- lm(test data # what tp predict ~ train data # from what to predict + train data1) -> predict test data from train data and well as train data 1
+                                                 startup and shut down :
+                                                   customization using startup files .
+                                                 R programs to be initialized at the start of a program, keep them in file named .Rprofile located in the directory of R . Custom profiles for projects.
+                                                 e.g. options(editor = “\usr\bin\vim”)
+                                                 current working directory. getwd() # get working directory. setwd(“abc”) # set working directory.
+                                                 . Rdata saved workspace
+                                                 .Rhistory records of commands.
+                                                 R --vanilla. Most basic. No prompts to load or save work.
+                                                 help( ) :
+                                                   help(function)
+                                                 ?function
+                                                 example(function). Run sample examples for the function provided in help for that function.
+                                                 help.search(“ “)
+                                                 help(package=MASS)
+                                                 R CMD commandname --help
+                                                 CHAPTER 2 : VECTORS
+                                                 R variable types are called modes
+                                                 Insert : c ( x[1:3],160,x[4]) # insert before index 4 . x internally works as a pointer and reassignment is implemented by pointing x to the newly creating pair.
+                                                 Recycling : Automatic lengthening of vectors
+                                                 Filtering : Extraction of subset of vectors.
+                                                 Vectorization : Where functions are applied to element wise vectors.
+                                                 Matrix and arrays as vectors : They act as vectors . Merely have class attributes. Vector operations are possible on matrix and arrays as well.
+                                                 ** Recycling:** Automatically recycle/ repeat the shorter vector to match the length of the longer vector. E . G. c(1,2,3) + c(1,2,3,4,5) becomes c(1,2,3,1,2) + c(1,2,3,4,5)
+                                                 Element wise vector algebra.
+                                                 Vector Indexing : format is : vector1[ vector 2]. E.g y[c(1,3)] , y[2:3] , v <- 3:4 y[v]
+                                                 Duplicates are allowed e.g. y <- x[1,1,3]
+                                                 Negative subscripts indicates we want to remove that index from output. e.g. x[-1:2] , x[-1]
+                                                 Generating useful vectors with “:” Vectors containing a range of numbers. e.g. 1 :i-1 means (I:1) -1 and not 1:(I-1). Precedence should be considered . “ : “ operator has more precedence than “-“ operator here.
+                                                 Generating vector sequences with seq()
+                                                 Sequence is in arithmetic progression. e.g. seq( from=12, to = 30, by = 3) .We can specify seq length.
+                                                 Repeating vector constants with rep()
+                                                 x <- rep(vector, count or each=count)
+                                                 all() and any():
+                                                   any or all of the arguments are true.
+                                                 any(x >8) , all(x >8)
+                                                 cumsum() : calculates the cumulative sum of vectors.
+                                                 Vectorized operations: Function applied to vector is applied to individual elements .
+                                                 Vector In, Vector Out :
+                                                   u <- c(1,2,3), v<- c(2,3,4) u >v. # checking for u greater than v . Here ans : false, false, false.
+                                                 sqrt(1 : 9)
+                                                 Vector In Matrix out :
+                                                   Done using sapply(elements, function). Apply function to each element and then convert into matrix
+                                                 Na and Null values :
+                                                   Na handles missing values. Na.rm = T for mean(x, na.rm = T) skips all the values with na and calculates the mean using remaining values.
+                                                 Null to build up vectors in loop.
+                                                 Filtering :
+                                                   Filtering indices :z <- c(1,2,-4,5) w <- z[z*z > 8]
+                                                 Filtering with subset : Allows to discard NA values as opposed to normal filtering . subset(x, x>10)
+                                                 Filtering with which: Positions at which the conditions hold. e.g. which(z*z >3). Useful to determine first index where the condition holds.
+                                                 Vectorized if then else
+                                                   ifelse() function is used.
+                                                 Vectorized
+                                                 Potentially faster.
+                                                 udcorr(x,y) finding correlation between x and y.
+                                                 diff(u) difference of element with the elements behind it . The position of elements behind to compare is called lag. Default value of lag is 1.
+                                                 sign(diff(u)) +ve or -ve difference . Sign of difference is returned here.
+                                                 Lazy evaluation : Not Evaluated unless need arises.
+                                                 read.csv() # reading a csv file
+                                                 Vector Equality:
+                                                   x == y
+                                                 identical(x,y)
+                                                 : produces integers c() produces floating point numbers
+                                                 Vector Element Names:
+                                                   Assign or query vectors using names.
+                                                 names(x) <- “a”, “b” ,”abc” # assign
+                                                 x[b] # query
+                                                 c():
+                                                   Flattening effect for vectors. E.g.One floating point entry causes all the outputs to be of floating point in nature.
+                                                 Matrices:
+                                                   matrix(vector, no of rows, no of cols
+                                                          Linear Algebra :
+                                                            Multiplication : y %*%y
+                                                          Addition : y+y
+                                                          Scalar Multiply : 3 * y
+                                                          Indexing : x[,1], x[ , 2:3]. Assigning to sub matrices. y[c(1,3) ,] <- matrix(c(1,1,8,12),nrow =2)
+                                                          Filtering: Just like vectors. e.g. x [ x[,2] >=3, ] . x is a vector and 3 was recycled into vector of 3s.
+                                                          Functions to matrix rows and columns:
+                                                            apply(m, dimcode, f, fargs). =1 if applied for rows. =2 if applied for columns.
+                                                          f : function
+                                                          fargs : arguments applied to f .
+                                                          e.g. apply(z,2,mean)
+                                                          which.max() # where the max value occurs.
+                                                          Preventing Dimension reduction
+                                                          Access a column vector as a 1 * n matrix by adding drop = FALSE at the end of the operation. E.g. r <-z[2, ,drop = FALSE]
+                                                          as.matrix(u). # accessing vector u as a matrix.
+                                                          Naming matrix rows and columns :
+                                                            colnames(z) <- c(“a”, ”b”)
+                                                          CHAPTER 4 LISTS :
+                                                            List in R is similar to dictionary in python.
+                                                          Lists are a type of vectors . Ordinary lists are called atomic lists.
+                                                          component names (tags). Are not compulsory.
+                                                          name of list components can be abbreviated without causing ambiguity to any extent.
+                                                          can be created by vectors. e.g. y <- vector(mode = “list”)
+                                                          can access by 3 ways . j$keyname, j[[position]], j[[“key]]
+                                                          adding and deleting : z$c <- “Sailing”. z[5:7] <- c(FALSE, TRUE, FALSE) < Adding > . z$c <- Null < Deleting >
+                                                            List Size : length(list)
+                                                          e.g. Text concordance :
+                                                            replace non letter characters with blanks.
+                                                          convert to lower case.
+                                                          storage cost for sparse matrix implementation.
+                                                          reading words in file by calling scan()
+                                                          txt <- scan(filename, “”). Here txt will be vector of strings. One string per instance of a word in a file.
+                                                          Accessing list components and values :
+                                                            If list components have tags, the can be accessed by using names()
+                                                          to obtain values , use unlist(). U <- unlist(j). Return value of unlist() is a vector . Element names come form the original list.
+                                                          Vectors will be coerced in the highest type of the components in the hierarchy. Raw < logical < integer <real < complex < character < list < expression . Pair lists are treated as lists.
+                                                          remove the names by setting them to null . names(l) <- NULL. Or by using unname(l)
+                                                          Applying functions to lists ():
+                                                            lapply() and sapply():
+                                                            lapply(vector, function) . Apply on list . Works like apply() of matrix. Calling specified function on each component in a list and returning an another list. E.g lapply(list(1:4, 10:15), median)
+                                                          sapply(). Simplifying the result from lapply() onto a vector or a matrix.
+                                                          sort(vector)
+                                                          order(vector). Return indices of the vectors in sorted order and not a sorted vector.
+                                                          barplot(vector).
+                                                          lapply(c("M","F","I"),function(gender) which(g==gender)). Here returns the indices of males first then indices of female and then indices of infants.
+                                                          Recursive Lists :
+                                                            can have list within list. e.g. a <- list(list/vector, list/vector)
+                                                          c (list (a = 11, b = 12, c = list ( d = 1, e = 2 )) # making a recursive list
+                                                             c (list (a = 11, b = 12, c = list ( d = 1, e = 2 ), recursive = T) # making a non recursive list
+                                                                DATAFRAMES
+                                                                Kind of like matrix with two dimensional rows and columns structure.
+                                                                Each column may have different mode. Heterogeneous analogy of matrices.
+                                                                List with components being equal length vectors. Assumed component of data frames are vectors.
+                                                                Creating Data frames :
+                                                                  d <- data.frame(vector1, vector2, stringsAsFactors = FALSE)
+                                                                Accessing Dataframes :
+                                                                  d[[1]] or d$kids or as a matrix type d[,1] this third type is useful for extracting sub data frames.
+                                                                str(d) # to see about d.
+                                                                Extracting sub data frames :
+                                                                  extract by rows and columns. E.g. examples[2:3, ] or examples[2:3,2] (this one creates a vector instead of data frame. If we specify drop = FALSE. Dataframe is generated.
+                                                                                                                                        Filtering by : examples[examples.marks > 100 , ]
+                                                                                                                                        Treating NA values :
+                                                                                                                                          Can be handled by using na.rm = TRUE. To specify R to ignore NA values.
+                                                                                                                                        get rid of data frame of any observation having NA value by : complete.cases(dataframe)
+                                                                                                                                        rbind() and cbind() functions and alternatives :
+                                                                                                                                          rbind().Added row is of type data frame or list only.
+                                                                                                                                        cbind() can add new columns using previous columns too
+                                                                                                                                        apply()
+                                                                                                                                        e.g. salary study.
+                                                                                                                                        assign()
+                                                                                                                                        Merging Data frames:
+                                                                                                                                          merge(x,y). Assumes that data frames have at least one column in common.
+                                                                                                                                        if same data but different column names. Do merge by using by.x and by.y to merge columns of data frames . e.g. merge(d1, d2, by.x =“cols”, by.y = “coly”)
+                                                                                                                                        count.fields(“filename”, sep=“delimiter”)
+                                                                                                                                        unique(vector) unique entries in vectors.
+                                                                                                                                        Functions on data frames :
+                                                                                                                                          using lapply() and sapply() on data frames.
+                                                                                                                                        as.data.frame(list) # to convert a list into a data frame.
+                                                                                                                                        e.g. applying logistic regression models.
+                                                                                                                                        glm(). Generalized linear models.
+                                                                                                                                        e.g. Chinese dialects.
+                                                                                                                                        mapsound() function in R maps list if transformations and its frequency of occurence.
+                                                                                                                                        params : df = data frame, fromcol = map from which column, tocol = Map to which column, sourceval = source value to be mapped. Returns two components. Count(list of integer vectors) and images ( list of char vectors)
+                                                                                                                                        FACTORS AND TABLES:
+                                                                                                                                          Factors are base of operations.
+                                                                                                                                        Factors and levels :
+                                                                                                                                          Factor : Vector with some added information.
+                                                                                                                                        Levels : Extra information in factors .
+                                                                                                                                        Data is recoded as levels.
+                                                                                                                                        factor(vector) or factor(vector, levels = c())
+                                                                                                                                        Common functions used with factors :
+                                                                                                                                          tapply(x,f,g):
+                                                                                                                                          x is a vector, f is a factor, g is a function.
+                                                                                                                                        if component of f is a vector, coerced by using as.factor (f)
+                                                                                                                                        split():
+                                                                                                                                          basic : split(x,f). x = list or data frames. F = factors or list of factors
+                                                                                                                                        splits x into groups which are returned in a list.
+                                                                                                                                        by(data, grouping factor, function):
+                                                                                                                                          works like tapply() but applied on objects rather than vectors.
+                                                                                                                                        tables :
+                                                                                                                                          table(). Creating contingency tables using this
+                                                                                                                                        table(vetcorlist)
+                                                                                                                                        matrix or array like operations :
+                                                                                                                                          access using indices . tb[1,1]
+                                                                                                                                        multiply by scalar eg tb/5 tb*5
+                                                                                                                                        apply(tb, 1 or 2, function)
+                                                                                                                                        addmargins() : finding marginal totals.
+                                                                                                                                        get names of dimensions and levels : dimnames(tb)
+                                                                                                                                        extracting a subtable :
+                                                                                                                                          subtable(tbname, subnames)
+                                                                                                                                        array(data, dimensions, dim names)
+                                                                                                                                        FInding largest cells in a table :
+                                                                                                                                          tabdom(table name, no of cells to fetch)
+                                                                                                                                        Factor and table related functions :
+                                                                                                                                          aggregate():
+                                                                                                                                          calls tapply() once for each variable in a group.
+                                                                                                                                        cut() :
+                                                                                                                                          Common way to generate factors. Input is data vector x and set of bins defined by a vector b. Function which bin, each element of x falls into.
+                                                                                                                                        y <-cut(x,b, labels = FALSE)
+                                                                                                                                        bins are semi open intervals.
+                                                                                                                                        R PROGRAMMING STRUCTURES:
+                                                                                                                                          R is a block structured language.
+                                                                                                                                        R has a richer scoping structure than c
+                                                                                                                                        Control statements :
+                                                                                                                                          Loops :
+                                                                                                                                          for(n in x){ ...}
+                                                                                                                                        while(true){...}
+                                                                                                                                        repeat{...}
+                                                                                                                                        break
+                                                                                                                                        return()
+                                                                                                                                        Looping over non vector sets :
+                                                                                                                                          No direct support to iterate no vector sets
+                                                                                                                                        lapply() assume that the iterations in loop are independent of each other and can be performed in any order.
+                                                                                                                                        get()
+                                                                                                                                        If else :
+                                                                                                                                          single instructions also need braces around them.
+                                                                                                                                        Arithmetic and boolean values and operators :
+                                                                                                                                          Default values in arguments :
+                                                                                                                                          False means we don’t need to consider the items.
+                                                                                                                                        return()
+                                                                                                                                        Avoid explicit calls to return.
+                                                                                                                                        Returning complex objects :
+                                                                                                                                          If multiple return, place them in a list or a container.
+                                                                                                                                        Functions are objects :
+                                                                                                                                          functions are first class objects.
+                                                                                                                                        Parts of function : formals and body
+                                                                                                                                        page(function name) to view details about lengthy functions.
+                                                                                                                                        Assign them , use them as arguments to other functions.
+                                                                                                                                        Can loop through a list of functions.
+                                                                                                                                        quote(2x+3) doesn’t evaluate. It passes the value 2x+3 to the assigned variable
+                                                                                                                                        Environment and scope issues :
+                                                                                                                                          function is normally referred as a closure.
+                                                                                                                                        function consists of arguments, body and environment.
+                                                                                                                                        Environment : collection of objects present at the time the function was created.
+                                                                                                                                        Top level Environment :
+                                                                                                                                          ls () gives a list of objects in the environment.
+                                                                                                                                        function called at top level is at the interpreter command prompt.
+                                                                                                                                        Scope hierarchy :
+                                                                                                                                          In other words, if one function is defined within another, then that inner function’s environment consists of the environment of the outer one, plus whatever locals have been created so far within the outer one.
+                                                                                                                                        With multiple nesting of functions, you have a nested sequence of larger and larger environments, with the “root” consisting of the top-level objects
+                                                                                                                                        Inner function is local to outer and is invisible at the outer level.
+                                                                                                                                        Environments created by hierarchy are generally referred by their memory locations.
+                                                                                                                                        ls()
+                                                                                                                                        without arguments, call from function returns name of local variables.
+                                                                                                                                        parent.frame(n = ) n gives a number of how many frame to go up in the chain.
+                                                                                                                                        Functions have almost no side effects :
+                                                                                                                                          functions do not change non local variables .
+                                                                                                                                        they can read non local variables bu cannot write.
+                                                                                                                                        Function to display content of a call frame :
+                                                                                                                                          showframe(). When call to g inside f and we want to see value of locals of f and globals.
+                                                                                                                                        No pointers in R :
+                                                                                                                                          Writing to non locals with super assignment operators.
+                                                                                                                                        << assign to top level environment. Check for higher in hierarchy
+                                                                                                                                        Wrting to non locals using assign():
+                                                                                                                                          assign(“u”, 2 * u , pos=.GlobalEnv)
+                                                                                                                                        Discrete Event Simulation :
+                                                                                                                                          changing only discrete quantities rather than changing continuously.
+                                                                                                                                        Write DES code using event oriented paradigm.
+                                                                                                                                        When to use global variables ?
+                                                                                                                                        In R global refers to located in a higher environment hierarchy.
+                                                                                                                                        Threaded code and GPU codes heavily use global to write faster programs.
+                                                                                                                                        Less cluttered code
+                                                                                                                                        Easy manipulation
+                                                                                                                                        Closures():
+                                                                                                                                          Recursion :
+                                                                                                                                          quicksort
+                                                                                                                                        bst
+                                                                                                                                        Replacement functions :
+                                                                                                                                          names(x) <- c(“a”,b”,”c”) means x <- “names <-“(x, value = c(“a”,”b”,”c”))
+                                                                                                                                        Any assignment in which left side is not an identifier is called replacement function.
+                                                                                                                                        Text editor interaction
+                                                                                                                                        edit(f1) . Opens a text editor.
+                                                                                                                                        options(editor = “path to editor”)
+                                                                                                                                        User defined binary functions :
+                                                                                                                                          %fname% <- function(a,b) { return (a+b) }
+                                                                                                                                        

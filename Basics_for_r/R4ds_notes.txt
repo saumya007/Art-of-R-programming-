@@ -1,0 +1,268 @@
+R FOR DATA SCIENCE NOTES :
+Packagename :: method() # to call a method that belongs to a package .
+ggplot() :
+ggplot(data = ) + <Geom-function>(mapping = aes(mappings))
+mpg with 234 rows .
+drv decides if it is a front or a rear wheel drive or a 4 wheel drive. F =. Font r =. Rear. 4 =. Four
+hwy vs cyl. Cyl = number of cylinders. Hwy = highway miles per gallon.
+class vs drv why no useful ? Because the plot gives may classes for a particular drive . Unable to decide which class the points fall into .
+aesthetic mappings:
+visual property of objects in a plot. Includes shape , size and color of points. Level to describe aesthetic properties.
+scaling : applying aesthetic to every unique variable.
+ggplot adds a legend for explanation.
+size aesthetic for classes can be used . Warning because mapping unordered variable to ordered aesthetic.
+shape palette can deal with max of 6 shapes . For more shapes, we need to specify shapes.
+The aes() function gathers together each of the aesthetic mappings used by a layer and passes them to the layer’s mapping argument.
+manufacturer, model, trans, drv,, fl, are categorical.
+year, displ, cty, hwy are continuous.
+shapes cannot take continuous variables as shapes are not ordered.
+for aes(color = displ <5 ) evaluates expression displ <5. If true, one color else other color.
+facets :
+For categorical variables, split he plot into facets . Each displays a subset of data. Facet the plot by single variable, facet_plot(~variable name, now = n) ~ contains formula which represents a data structure to represent the data.
+for 2 variables, mention them using facet_grid(var1 ~var2)
+facet for continuous variables gives a row or a column for each unique variable. This slows down the computation.
+empty cells in the facet means no combination occurs in the data set.
+facet vs color aesthetic . Facet distinguishes better than color . For smaller classes, prefer color for larger classes , prefer facets.
+wider aspect ratio of screens so put variables with more unique levels in columns in facet_grid()
+In facet_grid(), nrow and ncol are implied by faceting variables.
+Geoms :
+Geometrical object used to represent data.
+Not every aesthetic works with every geom
+global and local mappings for geoms.
+se in geom_smooth specifies whether to add a translucent background that shows the confidence intervals.
+Statistical transformation :
+cut and count. Diamond example. Cut is mapped to x axis and count is mapped to y axis.
+every geom has a default stat and every stat has a default geom.
+geom_col vs geom_bar : geom_col has heights representing values of data.
+geom_bar : height of bar proportional to number of classes in each group.
+default hist associated with stat_summary() ->. geom_pointrange
+bar charts : color using color aesthetic or fill
+default adjustment in geom_boxplot() is position = “dodge”
+Coordinate systems :
+x and y coordinates act independently
+coord_flip() with x and y axis.
+coord_quickmap() sets the aspect ratio correctly for maps.
+labs() ->. Modify axis, legend and plot labels.
+geom_abline - > used for slope intercept lines.
+ggplot(data = ) +
+<GEOM_FUNCTION>(
+mapping = aes(),
+stat = ,
+position = 
+) +
+<COORDINATE_FUNCTION> +
+<FACET_FUNCTION>
+DATA TRANSFORMATION :
+View(dataset) # shows data set in excel sheet format or csv format.
+dttm : date times . Date and times
+lgl : logical. Vectors having true or false value.
+fctr : factors used by R to represent categorical variables with fixed possible values.
+date : dates
+dplyr :
+Pick observations by their values : filter()
+Reorder the rows : arrange()
+Pick the variables by their names : select()
+Create new variables with functions of old variables : mutate()
+Collapse many values down to a single summary : summarise()
+Use these functions together with groupby() which changes the scope of each function operating on entire dataset to operating on it group by group. These six functions provide the verbs for the language of data manipulation.
+Verbs params :
+first param is data frames.
+subsequent args describe what to do with the data frames.
+the result is new data frame.
+for floating point numbers, use near() instead of == to get better precision.
+boolean operators :
+and = & or = | not = !
+filter :(data frame, filteroptions....)
+arrange :(dataframe or tibble, columns... or desc(columns....))
+similar to filter but instead of selecting the rows, it changes their order.
+input data frame and set of column names to order by.
+1 column names then , extra column to break ties between matching entries.
+- desc(columns ...) to arrange in desc order
+- arrange(dataframe or tibble, columns .... )
+- missing values are always sorted in the end.
+- select():
+- select all columns between specific intervals :
+- select(dataframe or tibble, cola:colb) # select all the columns between a and b
+- select(dataframe or tibble, -( cola:colb)) # exclude all the columns between a and b
+- helper functions that can be used with select :
+- starts_with(“abc”)
+- ends_with(“abc”)
+- contains(“abc”)
+- matches(“(.)\1”) # regex match
+- num_range(“x”,1:3) # matches x1, x2 and x3
+- rename(data frame or tibble, column name to rename )
+- everything():
+- select(data frame or tibble , colname, everything()) # moves every columns from colname to the start of the data frame.
+- one column name multiple times in select will fetch. That column only once . Drops the duplicate name .
+- one_of : we don’t need to explicitly define multiple variables to select from. Define them in a vector and it will fetch the results by passing the vector on one_of(vector here..)
+- default lower case conversion of queried variable name in helpers to handle cases.
+- mutate(dataframe or tibble, colname = column1 op column2 , ......):
+- Adding new columns as a function of existing columns .
+- Useful creation functions () :
+- many functions to be used with mutate
+- functions must be vectorized.
+- arithmetic operations.
+- modular operations.
+- logn()
+- offset :
+- lead() : refer to leading values.
+- lag() : refer to lagging values.
+- most useful in conjugation with group_by() funciton
+- cumulative and rolling aggregates :
+- cumsum(), cummean(), cumprod(), cummuin(), cummax()
+- Rolling aggregates in the package RcppRoll
+- logical operators : >= , <= , >, <, !=
+- Ranking :
+- min_rank(vector)
+- min_rank(desc(y))
+- row_number()
+- dense_rank()
+- percent_rank()
+- cume_dist()
+- ntile()
+- summarise() :
+- collapse the data frame into a single row.
+- along with group_by() most useful.
+- group_by(). With summarise() form group summaries in dplyr .
+- combining multiple operators using pipe :
+- %>% represents a pipe operator.
+- x %> % f(y). Becomes f(x,y)
+- no pipelining in ggplot
+- counts :
+- Other summary functions() :
+- median(x)
+- sd(x)
+- IRQ(x) # interquartile range. Useful when dealing with outliers ..
+- mad(x) # median absolute range . Useful when dealing with outliers ..
+- min(x)
+- max(x)
+- quantile(x,0.25)
+- first(X)
+- last(x)
+- nth(x, position to retrieve)
+- Grouping multiple variables :
+- When we have , grouping with multiple variables , the summarise gives the summary of one variable at a time.
+- ungrouping by ungroup()
+- grouped mutates and filters :
+- functions that work on grouped mutates and filters are called window functions.
+-EXPLORATORY DATA ANALYSIS
+-what type of variation occours in data ?
+-what type of covariance is between variables ?
+- categorical variables saved as factors or character vectors.
+-tall bars show more common values. smaller bars show less common values.
+-no bars indicates that values are not discovered in data.
+-coord_catesian(xlim,ylim) # to see the values in a specific range and to zoom in to see if any values have been missed by the user.
+-R warns while removing missing values.
+-variance describe variation within variables. variance describes variation between variables. 
+-boxplot is a visual shorthand for distribution of values popular among the statasiticians.
+- boxplot contains :
+  - ranges from 25th percentile to 75th percentile, a distance known as interquartile range(IQR).  Line in the box represents 50% distribution(median). Idea whether distribution is skewed to one side or symmetric around median.
+  - if points fall at a distance > 1.5 * IRQ either side , then they are plotted individually and they are outliers.
+  - whisker is a line to the farthest non outlier points. 
+  -ggbeeswarm :  
+    1.) geom_beeswarm()
+    2.) geom_quasirandom()
+    3.) position_beeswarm()
+    4.) position_quasirandom()
+- geom_bind2d() and geom_hex() to bin in 2 directions.
+- cut_number() approximate number of points in each bin.
+-covariation reduces uncertainity.
+- Tibbles : 
+  - tibble(x = , y = , z = ,)
+  - never changes data type. e.g. 
+  - never changes row names. 
+  - tibbles so that dont overwhelm the user with much data.
+  - options(tibble.print_max = , tibble.print_min = ) # to print a max and min number of tibble entries. 
+  - Data Import :
+    - read_csv() reads comma separated files,  read_csv2() reads semicolon separated files, read_tsv() tab separated, read_delim() for any kind of demiliters.
+    - read_fwf() reads fixed width files. Has an argument as.is which controls the conversion to factors.
+    - check.names : check if column names are syntactically valid names.
+    - read_log() :  apache style log files. 
+    -  for introducting or reading medtadata using read_csv(),  mention skip = n. to skip n entries.  Or comment  = symbol to delete all the lines starting from symbol.
+    - if no column names, columns will be labelled from x to xn.
+    - can use NA to represent a specific value.
+    - Long running jobs have a progress bar, so you can see what’s happening. If you’re looking for raw speed, try data.table::fread(). 
+   -Parse functions :
+    - parse_integer(), parse_logical(), parse_date() ,  etc.
+    - na specifies which field should be treated as missing.
+    - parsing errors are obtained by problems(x)
+    - parse_characters()  used when character encodings is a question.
+    - parse_factors() :  used to create factors .
+    - parse_datetime(), parse_date() ,parse_time().
+    - parse_double()
+    - parse_number() :  to ignore non numeric characters.
+    - grouping_mark = symbol. symbol to join the numbers 
+    - represent ascii for the characters  by : charToRaw("String")
+    - readr uses utf encoding everywhere.
+    - guess_encoding(charToRaw(x)) :  to guess the encoding when a lots of data is available. 
+    - R uses factors to represent categorical variables that have a known set of possible values. Give parse_factor() a vector of known levels to generate a warning whenever an unexpected value is present:
+    - If the defaults for date time doesnt work, use the following into the parse function.
+    - %Y(4 digits), %y(2 digits)
+    - %m (2 digits), %b (abb names like Jan), %B(full name of month)
+    - %d (2 digits), %e(optional leading space)
+    - %H 0-23 hour.
+    -%I 0-12, must be used with %p.
+      %p AM/PM indicator.
+      %M minutes.
+      %S integer seconds.
+      %OS real seconds.
+      %Z Time zone (as name, e.g. America/Chicago). Beware of abbreviations: if you’re       American, note that “EST” is a Canadian time zone that does not have daylight          savings time. It is not Eastern Standard Time! We’ll come back to this time zones
+      %z (as offset from UTC, e.g. +0800).
+    - %. skip one non digit character
+    - %* skip multiple non digit character.
+    - guess_parser(string) :  guess the parser for the given string input.
+    - guess_max = x.  Guess the parser for atmost x records.
+    - For a simpler way, take input with .default as col_character() while getting the records. 
+    - conversion dont by using the function type_convert(df)
+    - writing into files using write_csv , write_tsv, write_excel_csv ( this exports the       data to excel into csv format)
+    - RDS intermediate binary format of R.
+    - read_ds, write_ds to load and store file into rds format.
+    -haven reads SPSS, Stata, and SAS files.
+    - readxl reads excel files (both .xls and .xlsx).
+    - DBI, along with a database specific backend (e.g. RMySQL, RSQLite, RPostgreSQL etc       ) allows you to run SQL queries against a database and return a data frame.
+    -jsonlite , xml2
+- Tidy Data :
+  - each variable must have its own column.
+  - each observation must have its own row.
+  - each value must have its own cell
+  - put each dataset into tibble.
+  - put each variable into column.
+  - spreading and gathering
+    - figure out the variables and observations.
+    - one variable may be spread across multiple columns. One observation may be spread across mutiple rows.
+    - gather and spread() .
+    - problems when column names are not the names of variables but values of variables.
+    - gather makes a key value pair. Here the name of the columns which are values, become the key and their values become the value.
+    - separate :  one column multiple variables. 
+    - unite  :  one variable, multiple columns.
+    -  separate by default separates on the basis of some non numeric character. use sep
+     = "symbol" to separate.
+    - if sep = integer is given,  sep considers it as the position to separate from
+    - unite uses _ as a default separator. 
+    - complete() takes a set of columns, and finds all unique combinations. It then           ensures the original dataset contains all those values, filling in explicit NAs         where necessary.
+    - fill() fills the entries with the most recent entry forwarded. 
+- Relational Data  ..
+  - Mutating joins
+  - Filtering joins
+  - Set Operations
+  - Primary Key
+  - Foreign key
+  - find primary key by filter(n>1)
+  - surrogate key. If the table doesnt have a primary key, a column can be added using mutate or row_number. This key is called surrogate key.
+  - primary key and corresponding foreign key form a relation. 
+  - Mutating joins : 
+    - like mutate, join adds variables to the right.
+    - inner_join, outer_join ( left , right, full)
+    - natural join -> use all the variables in both tables.No common column.
+    - by = c("a" = "b")
+    - join can be done by using merge.  In merge , keep all.x or all.y as true which ever side you want every columns.
+    - by in dplyr is same as using for sql while doing join.
+  - Filtering Joins :
+    -semi_join, anti_join. semi_join keeps all variables in x with a match in y. anti_join drops all the variables in x which have a match in y.
+    - semi_joins to match filtered summary tables back to original rows. 
+    - semi_joins dont match duplicate rows.
+    - anti joins are useful for diagnoising join mismatches. 
+  - set operations :
+    - union(x,y)
+    - intersection(x,y)
+    -setdiff(x,y)
